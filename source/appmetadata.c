@@ -10,13 +10,13 @@ static char* GetStringValue(mxml_node_t* node, const char* element)
 	
 	if (elementNode)
 	{
-		mxml_node_t* current = elementNode->child;
+		mxml_node_t* current = mxmlGetFirstChild(elementNode);
 
-		while (current && current->type != MXML_OPAQUE)
+		while (current && mxmlGetType(current) != MXML_OPAQUE)
 			current = mxmlWalkNext(current, elementNode, MXML_NO_DESCEND);
 
-		if (current->type == MXML_OPAQUE)
-			return current->value.opaque;
+		if (mxmlGetType(current) == MXML_OPAQUE)
+			return mxmlGetOpaque(current);
 	}
 	
 	return NULL;
@@ -26,13 +26,13 @@ static char* GetArgumentValue(mxml_node_t* node)
 {
 	if (node)
 	{
-		mxml_node_t* current = node->child;
+		mxml_node_t* current = mxmlGetFirstChild(node);
 
-		while (current && current->type != MXML_OPAQUE)
+		while (current && mxmlGetType(current) != MXML_OPAQUE)
 			current = mxmlWalkNext(current, node, MXML_NO_DESCEND);
 
-		if (current->type == MXML_OPAQUE)
-			return current->value.opaque;
+		if (mxmlGetType(current) == MXML_OPAQUE)
+			return mxmlGetOpaque(current);
 	}
 
 	return NULL;
